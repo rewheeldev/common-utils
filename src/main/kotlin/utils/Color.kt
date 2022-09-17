@@ -29,7 +29,7 @@ class Color {
      * @param b the blue component
      * @param a the alpha component
      */
-    constructor(r: Float, g: Float, b: Float, a: Float) {
+    constructor(r: Float = 0f, g: Float = 0f, b: Float = 0f, a: Float = 1f) {
         this.r = r
         this.g = g
         this.b = b
@@ -373,44 +373,56 @@ class Color {
         return Color(this)
     }
 
+    /**
+     * Red, green, blue and alpha components stacked in an array float.
+     */
+    fun asFloatArray(type: ColorSchemeType = ColorSchemeType.RGBA): FloatArray {
+        return when (type) {
+            ColorSchemeType.RGBA -> floatArrayOf(r, g, b, a)
+            ColorSchemeType.ARGB -> floatArrayOf(a, r, g, b)
+            ColorSchemeType.RGB -> floatArrayOf(r, g, b)
+        }
+    }
+
     companion object {
-        val WHITE = Color(1f, 1f, 1f, 1f)
-        val LIGHT_GRAY = Color(-0x40404001)
-        val GRAY = Color(0x7f7f7fff)
-        val DARK_GRAY = Color(0x3f3f3fff)
-        val BLACK = Color(0f, 0f, 0f, 1f)
+        val WHITE by lazy { Color(1f, 1f, 1f, 1f) }
+        val LIGHT_GRAY by lazy { Color(-0x40404001) }
+        val GRAY by lazy { Color(0x7f7f7fff) }
+        val DARK_GRAY by lazy { Color(0x3f3f3fff) }
+        val BLACK by lazy { Color(0f, 0f, 0f, 1f) }
 
         /** Convenience for frequently used `WHITE.toFloatBits()`  */
-        val WHITE_FLOAT_BITS: Float = Color.Companion.WHITE.toFloatBits()
-        val CLEAR = Color(0f, 0f, 0f, 0f)
-        val BLUE = Color(0f, 0f, 1f, 1f)
-        val NAVY = Color(0f, 0f, 0.5f, 1f)
-        val ROYAL = Color(0x4169e1ff)
-        val SLATE = Color(0x708090ff)
-        val SKY = Color(-0x78311401)
-        val CYAN = Color(0f, 1f, 1f, 1f)
-        val TEAL = Color(0f, 0.5f, 0.5f, 1f)
-        val GREEN = Color(0x00ff00ff)
-        val CHARTREUSE = Color(0x7fff00ff)
-        val LIME = Color(0x32cd32ff)
-        val FOREST = Color(0x228b22ff)
-        val OLIVE = Color(0x6b8e23ff)
-        val YELLOW = Color(-0xff01)
-        val GOLD = Color(-0x28ff01)
-        val GOLDENROD = Color(-0x255adf01)
-        val ORANGE = Color(-0x5aff01)
-        val BROWN = Color(-0x74baec01)
-        val TAN = Color(-0x2d4b7301)
-        val FIREBRICK = Color(-0x4ddddd01)
-        val RED = Color(-0xffff01)
-        val SCARLET = Color(-0xcbe301)
-        val CORAL = Color(-0x80af01)
-        val SALMON = Color(-0x57f8d01)
-        val PINK = Color(-0x964b01)
-        val MAGENTA = Color(1f, 0f, 1f, 1f)
-        val PURPLE = Color(-0x5fdf0f01)
-        val VIOLET = Color(-0x117d1101)
-        val MAROON = Color(-0x4fcf9f01)
+        val WHITE_FLOAT_BITS: Float by lazy { Color.Companion.WHITE.toFloatBits() }
+        val CLEAR by lazy { Color(0f, 0f, 0f, 0f) }
+        val TRANSPARENT by lazy { Color(a = 0f) }
+        val BLUE by lazy { Color(0f, 0f, 1f, 1f) }
+        val NAVY by lazy { Color(0f, 0f, 0.5f, 1f) }
+        val ROYAL by lazy { Color(0x4169e1ff) }
+        val SLATE by lazy { Color(0x708090ff) }
+        val SKY by lazy { Color(-0x78311401) }
+        val CYAN by lazy { Color(0f, 1f, 1f, 1f) }
+        val TEAL by lazy { Color(0f, 0.5f, 0.5f, 1f) }
+        val GREEN by lazy { Color(0x00ff00ff) }
+        val CHARTREUSE by lazy { Color(0x7fff00ff) }
+        val LIME by lazy { Color(0x32cd32ff) }
+        val FOREST by lazy { Color(0x228b22ff) }
+        val OLIVE by lazy { Color(0x6b8e23ff) }
+        val YELLOW by lazy { Color(-0xff01) }
+        val GOLD by lazy { Color(-0x28ff01) }
+        val GOLDENROD by lazy { Color(-0x255adf01) }
+        val ORANGE by lazy { Color(-0x5aff01) }
+        val BROWN by lazy { Color(-0x74baec01) }
+        val TAN by lazy { Color(-0x2d4b7301) }
+        val FIREBRICK by lazy { Color(-0x4ddddd01) }
+        val RED by lazy { Color(-0xffff01) }
+        val SCARLET by lazy { Color(-0xcbe301) }
+        val CORAL by lazy { Color(-0x80af01) }
+        val SALMON by lazy { Color(-0x57f8d01) }
+        val PINK by lazy { Color(-0x964b01) }
+        val MAGENTA by lazy { Color(1f, 0f, 1f, 1f) }
+        val PURPLE by lazy { Color(-0x5fdf0f01) }
+        val VIOLET by lazy { Color(-0x117d1101) }
+        val MAROON by lazy { Color(-0x4fcf9f01) }
         /** Sets the specified color from a hex string with the format RRGGBBAA.
          * @see .toString
          */
@@ -601,5 +613,11 @@ class Color {
             intBits = intBits or (((intBits ushr 24) * (255f / 254f)).toInt() shl 24)
             return intBits
         }
+    }
+
+    enum class ColorSchemeType {
+        ARGB,
+        RGBA,
+        RGB
     }
 }
