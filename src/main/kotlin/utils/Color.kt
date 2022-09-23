@@ -237,10 +237,10 @@ class Color {
         return this
     }
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val color = o as Color
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val color = other as Color
         return toIntBits() == color.toIntBits()
     }
 
@@ -431,12 +431,12 @@ class Color {
          */
         @JvmOverloads
         fun valueOf(hex: String, color: Color = Color()): Color {
-            var hex = hex
-            hex = if (hex[0] == '#') hex.substring(1) else hex
-            color.r = hex.substring(0, 2).toInt(16) / 255f
-            color.g = hex.substring(2, 4).toInt(16) / 255f
-            color.b = hex.substring(4, 6).toInt(16) / 255f
-            color.a = if (hex.length != 8) 1F else hex.substring(6, 8).toInt(16) / 255f
+            var hexLocal = hex
+            hexLocal = if (hexLocal[0] == '#') hexLocal.substring(1) else hexLocal
+            color.r = hexLocal.substring(0, 2).toInt(16) / 255f
+            color.g = hexLocal.substring(2, 4).toInt(16) / 255f
+            color.b = hexLocal.substring(4, 6).toInt(16) / 255f
+            color.a = if (hexLocal.length != 8) 1F else hexLocal.substring(6, 8).toInt(16) / 255f
             return color
         }
 

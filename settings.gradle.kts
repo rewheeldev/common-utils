@@ -1,3 +1,4 @@
 
-rootProject.name = "ReWheelDevUtil"
+rootProject.name = "common-utils"
+
 
